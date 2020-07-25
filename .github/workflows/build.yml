@@ -65,27 +65,33 @@ jobs:
         name: Run snapshot build
         run: |
           CHANNEL=release make release
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Release
+        uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ env.AG_VERSION }}
-          release_name: ${{ env.AG_VERSION }}
-          body: |
-            AdGuard Home ${{ env.AG_VERSION }}
+          files: |
+            dist/AdGuardHome_darwin_386.zip
+            dist/AdGuardHome_darwin_amd64.zip
+            dist/AdGuardHome_freebsd_386.tar.gz
+            dist/AdGuardHome_freebsd_amd64.tar.gz
+            dist/AdGuardHome_freebsd_arm64.tar.gz
+            dist/AdGuardHome_freebsd_armv5.tar.gz
+            dist/AdGuardHome_freebsd_armv6.tar.gz
+            dist/AdGuardHome_freebsd_armv7.tar.gz
+            dist/AdGuardHome_linux_386.tar.gz
+            dist/AdGuardHome_linux_amd64.tar.gz
+            dist/AdGuardHome_linux_arm64.tar.gz
+            dist/AdGuardHome_linux_armv5.tar.gz
+            dist/AdGuardHome_linux_armv6.tar.gz
+            dist/AdGuardHome_linux_armv7.tar.gz
+            dist/AdGuardHome_linux_mips64_softfloat.tar.gz
+            dist/AdGuardHome_linux_mips64le_softfloat.tar.gz
+            dist/AdGuardHome_linux_mips_softfloat.tar.gz
+            dist/AdGuardHome_linux_mipsle_softfloat.tar.gz
+            dist/AdGuardHome_windows_386.zip
+            dist/AdGuardHome_windows_amd64.zip
           draft: true
-          prerelease: false
-      - name: Upload Release Asset
-        id: upload-release-asset 
-        uses: actions/upload-release-asset@v1
+          name: ${{ env.AG_VERSION }}
+          tag_name: ${{ env.AG_VERSION }}
+          fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./my-artifact.zip
-          asset_name: my-artifact.zip
-          asset_content_type: application/zip
-
-
