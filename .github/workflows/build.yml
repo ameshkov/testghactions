@@ -89,7 +89,7 @@ jobs:
             dist/AdGuardHome_linux_mipsle_softfloat.tar.gz
             dist/AdGuardHome_windows_386.zip
             dist/AdGuardHome_windows_amd64.zip
-          draft: true
+          draft: false
           name: ${{ env.AG_VERSION }}
           tag_name: ${{ env.AG_VERSION }}
           fail_on_unmatched_files: true
